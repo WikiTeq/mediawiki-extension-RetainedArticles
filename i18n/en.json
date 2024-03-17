@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Pavel Astakhov"
+		]
+	},
+	"retained-articles-desc": "Adds a redirect option when deleting an Article page. The redirect to the retained article is shown on the deleted article.",
+	"retained-articles-title-label": "Retained article:",
+	"retained-articles-add-button-label": "Add retained article"
+}

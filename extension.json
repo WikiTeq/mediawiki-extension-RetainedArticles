@@ -1,0 +1,52 @@
+{
+	"name": "RetainedArticles",
+	"version": "1.0",
+	"author": [
+		"[https://www.mediawiki.org/wiki/User:Pastakhov Pavel Astakhov]"
+	],
+	"descriptionmsg": "retained-articles-desc",
+	"type": "other",
+	"requires": {
+		"MediaWiki": ">= 1.35.0"
+	},
+	"AutoloadNamespaces": {
+		"MediaWiki\\Extension\\RetainedArticles\\": "includes/"
+	},
+	"MessagesDirs": {
+		"RetainedArticles": [
+			"i18n"
+		]
+	},
+	"Actions": {
+		"delete": "MediaWiki\\Extension\\RetainedArticles\\OverwrittenDeleteAction"
+	},
+	"HookHandlers": {
+		"main": {
+			"class": "MediaWiki\\Extension\\RetainedArticles\\Hooks"
+		}
+	},
+	"Hooks": {
+		"BeforeDisplayNoArticleText": "main",
+		"LoadExtensionSchemaUpdates": "main",
+		"ArticleDeleteComplete": "main"
+	},
+	"ResourceModules": {
+		"ext.RetainedArticle.Manage": {
+			"scripts": [
+				"manage.js"
+			],
+			"dependencies": [
+				"mediawiki.widgets",
+				"oojs-ui"
+			],
+			"messages": [
+				"retained-articles-add-button-label"
+			]
+		}
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "resources",
+		"remoteExtPath": "RetainedArticles/resources"
+	},
+	"manifest_version": 2
+}

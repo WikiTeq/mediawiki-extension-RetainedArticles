@@ -1,0 +1,54 @@
+[
+	{
+		"name": "retained_articles",
+		"comment": "Stores retained articles shown on deleted pages",
+		"columns": [
+			{
+				"name": "ra_deleted_page_namespace",
+				"comment": "Namespace of the deleted article",
+				"type": "integer",
+				"options": { "notnull": true, "default": 0 }
+			},
+			{
+				"name": "ra_deleted_page_title",
+				"comment": "Title of the deleted article",
+				"type": "binary",
+				"options": { "notnull": true, "length": 255, "default": "" }
+			},
+			{
+				"name": "ra_retained_page_id",
+				"comment": "Used to find retained articles in case if it can't be found by title (the page was moved)",
+				"type": "integer",
+				"options": { "unsigned": true, "notnull": false, "default": null }
+			},
+			{
+				"name": "ra_retained_page_namespace",
+				"comment": "Namespace of the retained article",
+				"type": "integer",
+				"options": { "notnull": true, "default": 0 }
+			},
+			{
+				"name": "ra_retained_page_title",
+				"comment": "Title of the retained article",
+				"type": "binary",
+				"options": { "notnull": true, "length": 255, "default": "" }
+			},
+			{
+				"name": "ra_actor_id",
+				"comment": "Actor who added or changes this record",
+				"type": "integer",
+				"options": { "unsigned": true, "notnull": true }
+			},
+			{
+				"name": "ra_timestamp",
+				"comment": "Unix timestamp indicating when this record was added/changed",
+				"type": "mwtimestamp",
+				"options": { "notnull": true }
+			}
+		],
+		"indexes": [
+			{ "name": "ra_retained_page", "columns": [ "ra_retained_page_namespace", "ra_retained_page_title" ], "unique": false }
+		],
+		"pk": [	"ra_deleted_page_namespace", "ra_deleted_page_title" ]
+	}
+]
