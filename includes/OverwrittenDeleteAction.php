@@ -64,7 +64,7 @@ EOD;
 EOD;
 		preg_match_all( $pattern, $outputHtml, $matches, PREG_OFFSET_CAPTURE );
 		$offset = null;
-		while ( $matches ) {
+		while ( $matches && $matches[0] ) {
 			$m = array_pop( $matches[0] );
 			if ( self::hasSubmitButton( $outputHtml, $m[1] ) ) {
 				$offset = $m[1];
