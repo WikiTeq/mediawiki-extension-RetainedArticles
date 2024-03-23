@@ -30,10 +30,7 @@ class OverwrittenDeleteAction extends DeleteAction {
 				],
 				$form
 			);
-			$retainedArticle = Tools::getRetainedArticle( $this->getTitle() );
-			$retainedTitle = $retainedArticle ? $retainedArticle->getRetainedTitle() : null;
-			$value = $retainedTitle ? $retainedTitle->getFullText() : '';
-			$fieldHtml = $field->getOOUI( $value );
+			$fieldHtml = $field->getOOUI( '' );
 			$outputBodyText = $outputPage->mBodytext;
 			// Adds required modules
 			$form->prepareForm()->displayForm( false );

@@ -26,9 +26,8 @@
 		}
 	},
 	"Hooks": {
-		"BeforeDisplayNoArticleText": "main",
-		"LoadExtensionSchemaUpdates": "main",
-		"ArticleDeleteComplete": "main"
+		"ArticleDeleteComplete": "main",
+		"OutputPageBeforeHTML": "main"
 	},
 	"ResourceModules": {
 		"ext.RetainedArticle.Manage": {
