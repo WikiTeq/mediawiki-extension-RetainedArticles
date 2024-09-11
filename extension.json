@@ -1,13 +1,13 @@
 {
 	"name": "RetainedArticles",
-	"version": "1.0",
+	"version": "1.1",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:Pastakhov Pavel Astakhov]"
 	],
 	"descriptionmsg": "retained-articles-desc",
 	"type": "other",
 	"requires": {
-		"MediaWiki": ">= 1.35.0"
+		"MediaWiki": ">= 1.39.0"
 	},
 	"AutoloadNamespaces": {
 		"MediaWiki\\Extension\\RetainedArticles\\": "includes/"
@@ -26,7 +26,7 @@
 		}
 	},
 	"Hooks": {
-		"ArticleDeleteComplete": "main",
+		"PageDeleteComplete": "main",
 		"OutputPageBeforeHTML": "main"
 	},
 	"ResourceModules": {

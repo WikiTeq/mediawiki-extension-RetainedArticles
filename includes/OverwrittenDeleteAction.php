@@ -11,10 +11,8 @@ class OverwrittenDeleteAction extends DeleteAction {
 	/**
 	 * @inheritDoc
 	 */
-//	protected function showForm( string $reason ): void {
-//		parent::showForm( $reason );
-	public function show() {
-		parent::show();
+	protected function showForm( string $reason ): void {
+	parent::showForm( $reason );
 		$offset = $this->getOffsetOfSubmitButtonFieldLayout();
 		if ( $offset ) {
 			$outputPage = $this->getOutput();

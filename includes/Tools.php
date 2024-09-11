@@ -4,12 +4,11 @@ namespace MediaWiki\Extension\RetainedArticles;
 
 use CommentStoreComment;
 use MediaWiki\MediaWikiServices;
-use MediaWiki\Storage\SlotRecord;
+use MediaWiki\Revision\SlotRecord;
 use MWException;
 use MWUnknownContentModelException;
 use Title;
 use User;
-use WikiPage;
 
 class Tools {
 
@@ -25,7 +24,7 @@ class Tools {
 		$contentHandler = $services->getContentHandlerFactory()->getContentHandler( $title->getContentModel() );
 		$redirectContent = $contentHandler->makeRedirectContent( $redirectTarget );
 
-		$page = WikiPage::factory( $title );
+		$page = $services->getWikiPageFactory()->newFromTitle( $title );
 		$updater = $page->newPageUpdater( User::newSystemUser( 'MediaWiki default' ) );
 		$updater->setContent( SlotRecord::MAIN, $redirectContent );
 		$edit_summary = CommentStoreComment::newUnsavedComment(

@@ -3,32 +3,45 @@
 namespace MediaWiki\Extension\RetainedArticles;
 
 use Article;
+use ManualLogEntry;
 use MediaWiki\Hook\OutputPageBeforeHTMLHook;
-use MediaWiki\Page\Hook\ArticleDeleteCompleteHook;
+use MediaWiki\Page\Hook\PageDeleteCompleteHook;
+use MediaWiki\Page\ProperPageIdentity;
+use MediaWiki\Permissions\Authority;
+use MediaWiki\Revision\RevisionRecord;
 use MWException;
 use RequestContext;
 use Title;
 
-class Hooks implements ArticleDeleteCompleteHook, OutputPageBeforeHTMLHook {
+class Hooks implements OutputPageBeforeHTMLHook, PageDeleteCompleteHook {
 
 	/**
 	 * @inheritDoc
 	 */
-	public function onArticleDeleteComplete(
-		$wikiPage, $user, $reason, $id, $content, $logEntry, $archivedRevisionCount
+	public function onPageDeleteComplete(
+		ProperPageIdentity $page, Authority $deleter, string $reason, int $pageID, RevisionRecord $deletedRev,
+		ManualLogEntry $logEntry, int $archivedRevisionCount
 	) {
 		$request = RequestContext::getMain()->getRequest();
 		$retainedArticle = $request->getVal( 'retained-article' );
 		if ( $retainedArticle ) {
 			$retainedTitle = Title::newFromText( $retainedArticle );
 			if ( $retainedTitle ) {
-				try {
-					Tools::createRedirect( $wikiPage->getTitle(), $retainedTitle );
-				} catch ( MWException $e ) {
+				$title = Title::castFromPageIdentity( $page );
+				if ( !$title ) {
 					wfDebugLog(
 						__CLASS__,
-						__METHOD__ . ' Cannot create redirect page: ' . $e->getText()
+						__METHOD__ . ' Cannot create the title object using ProperPageIdentity: ' . $page->getDBkey()
 					);
+				} else {
+					try {
+						Tools::createRedirect( $title, $retainedTitle );
+					} catch ( MWException $e ) {
+						wfDebugLog(
+							__CLASS__,
+							__METHOD__ . ' Cannot create redirect page: ' . $e->getText()
+						);
+					}
 				}
 			} else {
 				wfDebugLog(
