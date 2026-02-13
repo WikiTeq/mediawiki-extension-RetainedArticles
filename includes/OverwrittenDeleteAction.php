@@ -29,7 +29,7 @@ class OverwrittenDeleteAction extends DeleteAction {
 				$form
 			);
 			$fieldHtml = $field->getOOUI( '' );
-			$outputBodyText = $outputPage->mBodytext;
+			$outputBodyText = $outputPage->mBodytext ?? '';
 			// Adds required modules
 			$form->prepareForm()->displayForm( false );
 			$outputPage->mBodytext = substr_replace( $outputBodyText, $fieldHtml, $offset, 0 );
@@ -53,7 +53,7 @@ EOD;
 	 */
 	private function getOffsetOfSubmitButtonFieldLayout(): ?int {
 		$outputPage = $this->getOutput();
-		$outputHtml = $outputPage->mBodytext;
+		$outputHtml = $outputPage->mBodytext ?? '';
 		$pattern = <<<EOD
 /<div[^>]*class=['"][^'"]*oo-ui-fieldLayout[ '"]/
 EOD;
