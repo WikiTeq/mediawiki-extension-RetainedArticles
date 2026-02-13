@@ -25,6 +25,9 @@ class Tools {
 		$redirectContent = $contentHandler->makeRedirectContent( $redirectTarget );
 
 		$page = $services->getWikiPageFactory()->newFromTitle( $title );
+		if ( !$page ) {
+			throw new MWException( 'RetainedArticles: WikiPageFactory::newFromTitle returned null for ' . $title->getPrefixedDBkey() );
+		}
 		$updater = $page->newPageUpdater( User::newSystemUser( 'MediaWiki default' ) );
 		$updater->setContent( SlotRecord::MAIN, $redirectContent );
 		$edit_summary = CommentStoreComment::newUnsavedComment(
