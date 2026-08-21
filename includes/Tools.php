@@ -25,6 +25,11 @@ class Tools {
 		$redirectContent = $contentHandler->makeRedirectContent( $redirectTarget );
 
 		$page = $services->getWikiPageFactory()->newFromTitle( $title );
+		if ( !$page ) {
+			throw new MWException(
+				'Cannot create a WikiPage object for the title: ' . $title->getPrefixedDBkey()
+			);
+		}
 		$updater = $page->newPageUpdater( User::newSystemUser( 'MediaWiki default' ) );
 		$updater->setContent( SlotRecord::MAIN, $redirectContent );
 		$edit_summary = CommentStoreComment::newUnsavedComment(
