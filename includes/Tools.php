@@ -23,6 +23,11 @@ class Tools {
 		$services = MediaWikiServices::getInstance();
 		$contentHandler = $services->getContentHandlerFactory()->getContentHandler( $title->getContentModel() );
 		$redirectContent = $contentHandler->makeRedirectContent( $redirectTarget );
+		if ( !$redirectContent ) {
+			throw new MWException(
+				'Cannot create redirect content for the title: ' . $title->getPrefixedDBkey()
+			);
+		}
 
 		$page = $services->getWikiPageFactory()->newFromTitle( $title );
 		if ( !$page ) {
