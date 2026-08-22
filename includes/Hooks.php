@@ -12,6 +12,7 @@ use MediaWiki\Revision\RevisionRecord;
 use MWException;
 use RequestContext;
 use Title;
+use User;
 
 class Hooks implements OutputPageBeforeHTMLHook, PageDeleteCompleteHook {
 
@@ -35,7 +36,10 @@ class Hooks implements OutputPageBeforeHTMLHook, PageDeleteCompleteHook {
 					);
 				} else {
 					try {
-						Tools::createRedirect( $title, $retainedTitle );
+						$performer = $deleter->getUser() instanceof User
+							? $deleter->getUser()
+							: User::newSystemUser( 'MediaWiki default' );
+						Tools::createRedirect( $title, $retainedTitle, $performer );
 					} catch ( MWException $e ) {
 						wfDebugLog(
 							__CLASS__,
